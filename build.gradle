@@ -1,0 +1,108 @@
+buildscript {
+	ext {
+		springBootVersion = '2.1.2.RELEASE' //1.5.2.RELEASE
+	}
+	repositories {
+		mavenCentral()
+		maven {
+			url "https://plugins.gradle.org/m2/"
+		}
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath "com.moowork.gradle:gradle-node-plugin:1.2.0"
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: "com.moowork.node"
+apply plugin: 'io.spring.dependency-management'
+
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+}
+
+node {
+	version = '8.5.0'
+	download = false
+	nodeModulesDir = file("src/main/frontend")
+
+}
+
+task fixMemoryHeapLimit(type: NpmTask, dependsOn: 'npmInstall'){
+	description = 'Increase heap size for build'
+	println 'Running memory fix'
+	args = ['run', 'fix-memory-limit']
+}
+
+//task buildClient(type: NpmTask, dependsOn: 'fixMemoryHeapLimit') { //production build
+//	group = 'build'
+//	description = 'Compile client side assets for production'
+//	args = ['run', 'buildProd']
+//}
+
+dependencies {
+	implementation 'com.graphql-java:graphql-java:11.0' // NEW
+	implementation 'com.graphql-java:graphql-java-spring-boot-starter-webmvc:1.0' // NEW
+	implementation 'com.google.guava:guava:26.0-jre' // NEW
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'com.graphql-java:graphql-java-extended-scalars:2021-06-29T01-19-32-8e19827'
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+//	compile('com.graphql-java:graphql-java-extended-scalars:16.0.0') //extended scalars
+	compile('org.springframework.boot:spring-boot-starter-actuator')
+	compile('org.springframework.boot:spring-boot-starter-data-jpa')
+	compile('org.springframework.boot:spring-boot-starter-data-rest')
+	compile('org.liquibase:liquibase-core')
+	compile('org.springframework.boot:spring-boot-starter-security')
+	compile('org.springframework.boot:spring-boot-starter-thymeleaf')
+	compile('org.springframework.boot:spring-boot-starter-web') {
+		exclude module: 'spring-boot-starter-tomcat'
+	}
+
+//	compile("org.springframework.boot:spring-boot-starter-mobile")
+	compile('com.zaxxer:HikariCP')
+	compile('org.springframework.boot:spring-boot-starter-websocket')
+	runtime('org.springframework.boot:spring-boot-devtools')
+	compile('org.hibernate:hibernate-java8')
+	runtime('com.h2database:h2')
+    compile group: 'org.postgresql', name: 'postgresql'//, version: '9.4-1200-jdbc41'
+
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok:1.18.8'
+	compile('ma.glasnost.orika:orika-core:1.4.6')
+	compile('io.jsonwebtoken:jjwt:0.7.0')
+
+	compile ('com.fasterxml.jackson.datatype:jackson-datatype-jsr310')
+
+// Ovo ispod sam sve isprobavao za elastic
+//	compile('org.springframework.boot:spring-boot-starter-data-elasticsearch:2.0.0.RELEASE')
+//    compile('org.elasticsearch.client:elasticsearch-rest-client-sniffer:5.6.1')
+//    compile('org.elasticsearch.client:transport')
+//    compile('org.elasticsearch.client:transport:5.0.0-alpha5')
+
+//	Sa ovim ispod je kao bilo proradilo
+//	compile('org.springframework.boot:spring-boot-starter-data-elasticsearch')
+//	compile group: 'org.elasticsearch', name: 'elasticsearch', version: '5.6.0'
+//	compile group: 'org.elasticsearch.client', name: 'transport', version: '5.6.0'
+//
+//    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.9.1'
+//    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.9.1'
+
+//    compile('net.java.dev.jna:jna') // ovo koristimo za embeded elastic
+
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+	testCompile('org.springframework.restdocs:spring-restdocs-mockmvc')
+
+	compile group: 'com.mashape.unirest', name: 'unirest-java', version: '1.4.9'
+//    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.0.1'
+}
+//compileJava.dependsOn buildClient

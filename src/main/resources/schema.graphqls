@@ -1,0 +1,1037 @@
+scalar DateTime
+
+type Query {
+    paperJournalByScopusID(scopusID: String): PaperJournal
+    findActivityByCodeAndNameAndDescription(code: String, name: String, description: String): [Activity]
+    findJournalByPissn(pissn: String): Journal
+    findJournalByEissn(eissn: String): Journal
+    findJournalByEissnAndPissn(eissn: String, pissn: String): Journal
+    findLanguageByCodeAndName(code: String, name: String): [Language]
+    countLanguageNotNull: Int!
+    countMonographOfPapersNotNull: Int!
+    findPaperJournalAuthorsByFirstNameAndLastNameAndMiddleNameAndEmailAndAffiliations(firstName: String, lastName: String, middleName: String, email: String, affiliations: String): [PaperJournalAuthors]
+    findPaperJournalAuthorsByNumOrderAndFirstNameAndLastNameAndMiddleNameAndEmailAndAffiliationsAndPersonId(numOrder: Int, firstName: String, lastName: String, middleName: String, email: String, affiliations: String, personId: Int): [PaperJournalAuthors]
+    findPaperJournalAuthorsByNumOrderAndFirstNameAndLastNameAndMiddleNameAndEmailAndAffiliations(numOrder: Int, firstName: String, lastName: String, middleName: String, email: String, affiliations: String): [PaperJournalAuthors]
+    findPaperJournalAuthorsByFirstNameAndLastNameAndMiddleNameAndEmailAndAffiliationsAndPersonId(firstName: String, lastName: String, middleName: String, email: String, affiliatoins: String, personId: Int): [PaperJournalAuthors]
+    findPaperJournalTypeByNameAndDescription(name: String, description: String): [PaperJournalType]
+    findPaperMonographByScopusID(scopusID: String): PaperMonograph
+    countPaperMonographs: Int
+    findPaperMonographAuthorsByFirstNameAndLastNameAndMiddleNameAndEmailAndAffiliations(firstName: String, lastName: String, middleName: String, email: String, affiliations: String): [PaperMonographAuthors]
+    findPaperMonographAuthorsByNumOrderAndFirstNameAndLastNameAndMiddleNameAndEmailAndAffiliationsAndPersonId(numOrder: Int, firstName: String, lastName: String, middleName: String, email: String, affiliations: String, personId: Int): [PaperMonographAuthors]
+    findPaperMonographAuthorsByNumOrderAndFirstNameContainingAndLastNameContainingAndMiddleNameContainingAndEmailContainingAndAffiliationsContainingAllIgnoreCase(numOrder: Int, firstName: String, lastName: String, middleName: String, email: String, affiliations: String): [PaperMonographAuthors]
+    findPaperMonographAuthorsByFirstNameAndLastNameAndMiddleNameAndEmailAndAffiliationsAndPersonId(firstName: String, lastName: String, middleName: String, email: String, affiliatoins: String, personId: Int): [PaperMonographAuthors]
+    findPaperProceedingsByScopusID(scopusID: String): PaperProceedings
+    countPaperProceedingsNotNull: Int!
+    findPaperProceedingsAuthorsByFirstNameAndLastNameAndMiddleNameAndEmailAndAffiliations(firstName: String, lastName: String, middleName: String, email: String, affiliations: String): [PaperProceedingsAuthors]
+    findPaperProceedingsAuthorsByNumOrderAndFirstNameAndLastNameAndMiddleNameAndEmailAndAffiliationsAndPersonId(numOrder: Int, firstName: String, lastName: String, middleName: String, email: String, affiliations: String, personId: Int): [PaperProceedingsAuthors]
+    findPaperProceedingsAuthorsByNumOrderAndFirstNameAndLastNameAndMiddleNameAndEmailAndAffiliations(numOrder: Int, firstName: String, lastName: String, middleName: String, email: String, affiliations: String): [PaperProceedingsAuthors]
+    findPaperProceedingsAuthorsByFirstNameContainingAndLastNameContainingAndMiddleNameContainingAndEmailContainingAndAffiliationsContainingAndPersonIdAllIgnoreCase(firstName: String, lastName: String, middleName: String, email: String, affiliatoins: String, personId: Int): [PaperProceedingsAuthors]
+    findPersonByScopusID(scopusID: String): Person
+    countPersonNotNull: Int!
+    countProceedingsNotNull: Int!
+}
+
+type Acknowledgement {
+    id: ID!
+    text: String
+    project: Project
+    paperJournal: PaperJournal
+    paperMonograph: PaperMonograph
+    paperProceedings: PaperProceedings
+    patent: Patent
+    product: Product
+    thesis: Thesis
+}
+
+type Product {
+    id: ID!
+    nameSrb: String
+    nameEng: String
+    nameOth: String
+    internalNumber: String
+    keywordsSrb: String
+    keywordsEng: String
+    keywordsOth: String
+    descriptionSrb: String
+    desriptionEng: String
+    descriptionOth: String
+    uri: String
+    dspaceRecordID: String
+    year: String
+    scopusID: String
+    ecrisID: String
+    cobissID: String
+    creator: String
+    modifier: String
+    creationDate: DateTime
+    lastModificationDate: DateTime
+    recordStatus: Int
+    productStatus: ProductStatus
+    productType: ProductType
+    language: Language
+    publisher: Publisher
+    file: [File]
+    acknowledgement: [Acknowledgement]
+}
+
+type ProductType {
+    id: ID!
+    name: String
+    description: String
+    product: [Product]
+}
+
+type ProductStatus {
+    id: ID!
+    name: String
+    description: String
+    product: [Product]
+}
+
+type PaperMonograph {
+    id: ID!
+    titleSrb: String
+    titleEng: String
+    titleOth: String
+    subtitleSrb: String
+    subtitleEng: String
+    subtitleOth: String
+    startPage: String
+    endPage: String
+    abstractSrb: String
+    abstractEng: String
+    abstractOth: String
+    keywordsSrb: String
+    keywordsEng: String
+    keywordsOth: String
+    startDate: DateTime
+    endDate: DateTime
+    acronym: String
+    uri: String
+    dspaceRecordID: String
+    scopusID: String
+    ecrisID: String
+    cobissID: String
+    note: String
+    creator: String
+    modifier: String
+    creationDate: DateTime
+    lastModificationDate: DateTime
+    recordStatus: Int
+    paperMonographType: PaperMonographType
+    paperMonographStatus: PaperMonographStatus
+    language: Language
+    monographOfPapers: MonographOfPapers
+    file: [File]
+    acknowledgement: [Acknowledgement]
+    paperMonographAuthors: [PaperMonographAuthors]
+}
+
+type MonographOfPapers {
+    id: ID!
+    titleSrb: String
+    titleEng: String
+    titleOth: String
+    subtitleSrb: String
+    subtitleEng: String
+    subtitleOth: String
+    isbn: String
+    numberOfPages: Int
+    editionTitle: String
+    editionNumber: Int
+    editionPISSN: String
+    editionEISSN: String
+    translated: Boolean
+    note: String
+    keywordsSrb: String
+    keywordsEng: String
+    keywordsOth: String
+    abstractSrb: String
+    abstractEng: String
+    abstractOth: String
+    dspaceRecordID: String
+    uri: String
+    year: String
+    scopusID: String
+    ecrisID: String
+    cobissID: String
+    creator: String
+    modifier: String
+    creationDate: DateTime
+    lastModificationDate: DateTime
+    recordStatus: Int
+    monographOfPaperStatus: MonographOfPaperStatus
+    monographOfPaperType: MonographOfPaperType
+    monographOfPapersEditors: [MonographEditors]
+    paperMonographs: [PaperMonograph]
+}
+
+type MonographEditors {
+    id: ID!
+    numOrder: Int
+    firstName: String
+    lastName: String
+    middleName: String
+    email: String
+    affiliations: String
+    monographOfPapers: MonographOfPapers
+    person: Person
+}
+
+type Person {
+    id: ID!
+    firstName: String
+    lastName: String
+    middleName: String
+    dateOfBirth: DateTime
+    placeOfBirth: String
+    state: String
+    address: String
+    city: String
+    bibliographySrb: String
+    bibliographyEng: String
+    keywordsSrb: String
+    keywordsEng: String
+    keywordsOth: String
+    gender: String
+    uri: String
+    email: String
+    orcid: String
+    scopusID: String
+    cobissID: String
+    ecrisID: String
+    dspaceRecordID: String
+    jmbg: String
+    phones: String
+    researchAreas: String
+    mntrn: String
+    note: String
+    creator: String
+    modifier: String
+    creationDate: DateTime
+    lastModificationDate: DateTime
+    recordStatus: String
+    alreadyRegistered: Boolean
+    language: Language
+    personType: PersonType
+    otherName: [PersonName]
+    titleInstitution: [TitleInstitution]
+    user: [UserAccount]
+    category: [PersonCategory]
+    institution: [PersonInstitution]
+    journalEditors: [JournalEditors]
+    paperJournalAuthors: [PaperJournalAuthors]
+    proceedingsEditors: [ProceedingsEditors]
+    paperProceedingsAuthors: [PaperProceedingsAuthors]
+    monographOfPapersMonographEditors: [MonographEditors]
+    paperMonographAuthors: [PaperMonographAuthors]
+    these: [Thesis]
+    authors: [PatentAuthors]
+    productAuthors: [ProductAuthors]
+    monographAuthors: [MonographAuthors]
+    journalGuestEditors: [JournalGuestEditors]
+    file: [File]
+    advisor: [Advisor]
+    commission: [Commission]
+    participant: [Participant]
+}
+
+type Participant {
+    id: ID!
+    numOrder: Int
+    firstName: String
+    lastName: String
+    middleName: String
+    email: String
+    affiliations: String
+    person: Person
+    project: Project
+    role: [ParticipantRole]
+}
+
+type ParticipantRole {
+    id: ID!
+    name: String
+    description: String
+    participant: Participant
+}
+
+type JournalGuestEditors {
+    id: ID!
+    year: String
+    volume: String
+    number: String
+    numberOfGuestEditors: Int
+    firstName: String
+    lastName: String
+    middleName: String
+    email: String
+    affiliations: String
+    journal: Journal
+    person: Person
+}
+
+type MonographAuthors {
+    id: ID!
+    numOrder: Int
+    firstName: String
+    lastName: String
+    middleName: String
+    email: String
+    affiliations: String
+    person: Person
+    monograph: Monograph
+}
+
+type Monograph {
+    id: ID!
+    titleSrb: String
+    titleEng: String
+    titleOth: String
+    subtitleSrb: String
+    subtitleEng: String
+    subtitleOth: String
+    volumeCode: String
+    volumeTitle: String
+    isbn: String
+    numberOfPages: Int
+    editionTitle: String
+    editionNumber: Int
+    editionEISSN: String
+    eiditionPISSN: String
+    translated: Boolean
+    note: String
+    keywordsSrb: String
+    keywordsEng: String
+    keywordsOth: String
+    abstractSrb: String
+    abstractEng: String
+    abstractOth: String
+    scopusID: String
+    dspaceRecordID: String
+    ecrisID: String
+    cobissID: String
+    uri: String
+    year: String
+    creator: String
+    modifier: String
+    creationDate: DateTime
+    lastModificationDate: DateTime
+    recordStatus: Int
+    language: Language
+}
+
+type ProductAuthors {
+    id: ID!
+    numOrder: Int
+    firstName: String
+    lastName: String
+    middleName: String
+    email: String
+    affiliations: String
+    person: Person
+}
+
+type PatentAuthors {
+    id: ID!
+    numOrder: Int
+    firstName: String
+    lastName: String
+    middleName: String
+    email: String
+    affiliations: String
+    person: Person
+}
+
+type PaperMonographAuthors {
+    id: ID!
+    numOrder: Int
+    firstName: String
+    lastName: String
+    middleName: String
+    email: String
+    affiliations: String
+    person: Person
+    paperMonograph: PaperMonograph
+}
+
+type PaperJournalAuthors {
+    id: ID!
+    numOrder: Int
+    firstName: String
+    lastName: String
+    middleName: String
+    email: String
+    affiliations: String
+    person: Person
+    paperJournal: PaperJournal
+}
+
+type JournalEditors {
+    id: ID!
+    startYear: String
+    startVolume: String
+    startNumber: String
+    endYear: String
+    endVolume: String
+    endNumber: String
+    numberOfEditors: Int
+    firstName: String
+    lastName: String
+    middleName: String
+    email: String
+    affiliations: String
+    person: Person
+    journal: Journal
+}
+
+type PersonCategory {
+    id: ID!
+    startDate: DateTime
+    endDate: DateTime
+    category: Category
+    person: Person
+}
+
+type Category {
+    id: ID!
+    name: String
+    description: String
+    PersonCategories: [PersonCategory]
+}
+
+type TitleInstitution {
+    id: ID!
+    title: String
+    year: String
+    institution: Institution
+    person: Person
+}
+
+type Institution {
+    id: ID!
+    nameSrb: String
+    nameEng: String
+    nameOth: String
+    address: String
+    place: String
+    postalCode: String
+    acro: String
+    keywordsSrb: String
+    keywordsEng: String
+    keywordsOth: String
+    uri: String
+    email: String
+    phone: String
+    pib: String
+    maticniBroj: String
+    bankAccount: String
+    ecrisID: String
+    nioID: String
+    mntrID: String
+    orcid: String
+    scopusID: String
+    dspaceRecordID: String
+    note: String
+    accreditationNumber: String
+    accreditationDate: DateTime
+    accreditationNote: String
+    creator: String
+    modifier: String
+    creationDate: DateTime
+    lastModificationDate: DateTime
+    recordStatus: Int
+    language: Language
+    institutionStatus: InstitutionStatus
+    institutionType: InstitutionType
+    superInstitution: Institution
+    subInstitutions: [Institution]
+    titleInstitution: [TitleInstitution]
+    user: [UserAccount]
+    person: [PersonInstitution]
+    founder: [Institution]
+    researchArea: [InstitutionResearchArea]
+    activity: [InstitutionActivity]
+    these: [Thesis]
+    file: [File]
+    partner: [Partner]
+}
+
+type Partner {
+    id: ID!
+    numOrder: Int
+    institution: Institution
+    project: Project
+    role: [PartnerRole]
+}
+
+type PartnerRole {
+    id: ID!
+    name: String
+    description: String
+    partner: Partner
+}
+
+type Thesis {
+    id: ID!
+    titleSrb: String
+    titleEng: String
+    titleOth: String
+    subtitleSrb: String
+    subtitleEng: String
+    subtitleOth: String
+    abstractSrb: String
+    abstractEng: String
+    abstractOth: String
+    keywordsSrb: String
+    keywordsEng: String
+    keywordsOth: String
+    studyType: String
+    uri: String
+    dspaceRecordID: String
+    year: String
+    numberOfPages: Int
+    scopusID: String
+    ecrisID: String
+    cobissID: String
+    creator: String
+    modifier: String
+    creationDate: DateTime
+    lastModificationDate: DateTime
+    recordStatus: Int
+    institution: Institution
+    comission: Commission
+    language: Language
+    person: Person
+    publisher: Publisher
+    thesisStatus: ThesisStatus
+    thesisType: ThesisType
+    file: [File]
+    advisor: [Advisor]
+    acknowledgement: [Acknowledgement]
+}
+
+type File {
+    id: ID!
+    dspaceFileID: String
+    note: String
+    doi: String
+    licence: Licence
+    institution: Institution
+    paperJournal: PaperJournal
+    paperMonograph: PaperMonograph
+    paperProceedings: PaperProceedings
+    patent: Patent
+    person: Person
+    project: Project
+    thesis: Thesis
+}
+
+type PaperProceedings {
+    id: ID!
+    titleSrb: String
+    titleEng: String
+    titleOth: String
+    subtitleSrb: String
+    subtitleEng: String
+    subtitleOth: String
+    startPage: String
+    endPage: String
+    numberOfPages: Int
+    note: String
+    keywordsSrb: String
+    keywordsEng: String
+    keywordsOth: String
+    abstractSrb: String
+    abstractEng: String
+    abstractOth: String
+    uri: String
+    dspaceRecordID: String
+    scopusID: String
+    ecrisID: String
+    cobissID: String
+    creator: String
+    modifier: String
+    creationDate: DateTime
+    lastModificationDate: DateTime
+    recordStatus: Int
+    language: Language
+    paperProceedingsType: PaperProceedingsType
+    paperProceedingsStatus: PaperProceedingsStatus
+    proceedings: Proceedings
+    file: [File]
+    acknowledgement: [Acknowledgement]
+    paperProceedingsAuthors: [PaperProceedingsAuthors]
+}
+
+type PaperProceedingsAuthors {
+    id: ID!
+    numOrder: Int
+    firstName: String
+    lastName: String
+    middleName: String
+    email: String
+    affiliations: String
+    person: Person
+    paperProceedings: PaperProceedings
+}
+
+type Proceedings {
+    id: ID!
+    titleSrb: String
+    titleEng: String
+    titleOth: String
+    subtitleSrb: String
+    subtitleEng: String
+    subtitleOth: String
+    isbn: String
+    numberOfPages: Int
+    dimension: String
+    editionTitle: String
+    editionNumber: Int
+    nameAbbreviationSrb: String
+    nameAbbreviationEng: String
+    nameAbbreviationOth: String
+    keywordsSrb: String
+    keywordsEng: String
+    keywordsOth: String
+    note: String
+    uri: String
+    dspaceRecordID: String
+    scopusID: String
+    ecrisID: String
+    cobissID: String
+    year: String
+    creator: String
+    modifier: String
+    creationDate: DateTime
+    lastModificationDate: DateTime
+    recordStatus: Int
+    conference: Conference
+    language: Language
+    publisher: Publisher
+    paperProceedings: [PaperProceedings]
+    proceedingsEditors: [ProceedingsEditors]
+}
+type ProceedingsEditors {
+    id: ID!
+    startDate: DateTime
+    endDate: DateTime
+    firstName: String
+    lastName: String
+    middleName: String
+    email: String
+    affiliations: String
+    person: Person
+    proceedings: Proceedings
+}
+type Conference {
+    id: ID!
+    nameSrb: String
+    nameEng: String
+    nameOth: String
+    place: String
+    year: String
+    period: String
+    number: String
+    state: Int
+    fee: String
+    description: String
+    descriptionEng: Int
+    descriptionOth: String
+    keywords: String
+    keywordsEng: String
+    keywordsOth: String
+    uri: String
+    scopusID: String
+    ecrisID: String
+    cobissID: String
+    creator: String
+    modifier: String
+    creationDate: DateTime
+    lastModificationDate: DateTime
+    recordStatus: Int
+    language: Language
+    proceedings: [Proceedings]
+}
+
+type PaperProceedingsStatus {
+    id: ID!
+    name: String
+    description: String
+    paperProceedings: [PaperProceedings]
+}
+
+type PaperProceedingsType {
+    id: ID!
+    name: String
+    description: String
+    paperProceedings: [PaperProceedings]
+}
+
+type Patent {
+    id: ID!
+    titleSrb: String
+    titleEng: String
+    titleOth: String
+    number: String
+    keywordsSrb: String
+    keywordsEng: String
+    keywordsOth: String
+    abstractSrb: String
+    abstractEng: String
+    abstractOth: String
+    uri: String
+    dspaceRecordID: String
+    year: String
+    scopusID: String
+    ecrisID: String
+    cobissID: String
+    creator: String
+    modifier: String
+    creationDate: DateTime
+    lastModificationDate: DateTime
+    recordStatus: Int
+    language: Language
+    patentStatus: PatentStatus
+    patentType: PatentType
+    publisher: Publisher
+    file: [File]
+    acknowledgement: [Acknowledgement]
+}
+
+type PatentType {
+    id: ID!
+    name: String
+    description: String
+    patent: [Patent]
+}
+
+type PatentStatus {
+    id: ID!
+    name: String
+    description: String
+    patent: [Patent]
+}
+
+type Licence {
+    id: ID!
+    name: String
+    description: String
+    paperJournal: [File]
+}
+
+type Advisor {
+    id: ID!
+    numOrder: Int
+    person: Person
+    thesis: Thesis
+}
+
+type ThesisType {
+    id: ID!
+    name: String
+    description: String
+    thesis: [Thesis]
+}
+
+type ThesisStatus {
+    id: ID!
+    name: String
+    description: String
+    thesis: [Thesis]
+}
+
+type Commission {
+    id: ID!
+    ordNum: Int
+    person: Person
+    thesis: [Thesis]
+}
+
+type InstitutionActivity {
+    id: ID!
+    note: String
+    institution: Institution
+    activity: Activity
+}
+
+type Activity {
+    id: ID!
+    code: String
+    name: String
+    institutionActivities: [InstitutionActivity]
+}
+
+type InstitutionResearchArea {
+    id: ID!
+    note: String
+    researchArea: ResearchArea
+    institution: Institution
+}
+type ResearchArea {
+    id: ID!
+    name: String
+    description: String
+    language: Language
+    institutionResearchAreas: InstitutionResearchArea
+}
+
+type PersonInstitution {
+    id: ID!
+    startDate: DateTime
+    endDate: DateTime
+    description: String
+    researchArea: String
+    percentage: Int
+    personInstitutionPosition: PersonInstitutionPosition
+    person: Person
+    institution: Institution
+    personInstitutionFunction: PersonInstitutionFunction
+    personInstitutionStatus: PersonInstitutionStatus
+}
+
+type PersonInstitutionStatus {
+    id: ID!
+    name: String
+    description: String
+    person: [PersonInstitution]
+}
+
+type PersonInstitutionFunction {
+    id: ID!
+    name: String
+    description: String
+    personInstitutions: [PersonInstitution]
+}
+
+type PersonInstitutionPosition {
+    id: ID!
+    name: String
+    description: String
+    personInstitutions: [PersonInstitution]
+}
+
+type UserAccount {
+    id: ID!
+    name: String
+    email: String
+    userpassword: String
+    note: String
+    activationCode: String
+    institution: Institution
+    userGroup: UserGroup
+    language: Language
+    person: Person
+}
+
+type UserGroup {
+    id: ID!
+    name: String
+    description: String
+    userAccounts: [UserAccount]
+}
+type InstitutionType {
+    id: ID!
+    name: String
+    description: String
+    institution: [Institution]
+}
+
+type InstitutionStatus {
+    id: ID!
+    name: String
+    description: String
+    institution: [Institution]
+}
+
+type PersonName {
+    id: ID!
+    firstName: String
+    lastName: String
+    middleName: String
+    person: Person
+}
+
+type PersonType {
+    id: ID!
+    name: String
+    description: String
+    person: [Person]
+}
+
+type MonographOfPaperType {
+    id: ID!
+    name: String
+    description: String
+    monographOfPapers: [MonographOfPapers]
+}
+type MonographOfPaperStatus {
+    id: ID!
+    name: String
+    description: String
+    monographOfPapers: [MonographOfPapers]
+}
+
+type PaperMonographType {
+    id: ID!
+    name: String
+    description: String
+    paperMonograph: [PaperMonograph]
+}
+
+type PaperMonographStatus {
+    id: ID!
+    name: String
+    description: String
+    paperMonograph: [PaperMonograph]
+}
+
+type Project {
+    id: ID!
+    titleSrb: String
+    titleEng: String
+    titleOth: String
+    abstractSrb: String
+    abstractEng: String
+    abstractOth: String
+    keywordsSrb: String
+    keywordsEng: String
+    keywordsOth: String
+    startDate: DateTime
+    endDate: DateTime
+    acronym: String
+    uri: String
+    dspaceRecordID: String
+    scopusID: String
+    ecrisID: String
+    cobissID: String
+    mntrn: String
+    note: String
+    creator: String
+    modifier: String
+    creationDate: DateTime
+    lastModificationDate: DateTime
+    recordStatus: Int
+    projectStatus: ProjectStatus
+    projectType: ProjectType
+    file: [File]
+    partner: [Partner]
+    participant: [Participant]
+}
+
+type ProjectStatus {
+    id: ID!
+    name: String
+    description: String
+    project: [Project]
+}
+
+type ProjectType {
+    id: ID!
+    name: String
+    description: String
+    project: [Project]
+}
+
+type PaperJournal {
+    id: ID!
+    titleSrb: String
+    titleEng: String
+    titleOth: String
+    subtitleSrb: String
+    subtitleEng: String
+    subtitleOth: String
+    startPage: String
+    endPage: String
+    volume: String
+    number: String
+    note: String
+    keywords: String
+    keywordsEng: String
+    keywordsOth: String
+    apstract: String
+    abstractEng: String
+    abstractOth: String
+    uri: String
+    doi: String
+    scopusID: String
+    cobissID: String
+    year: String
+    dspaceRecordID: String
+    creator: String
+    modifier: String
+    creationDate: DateTime
+    lastModificationDate: DateTime
+    recordStatus: Int
+    paperJournalType: PaperJournalType
+    paperJournalStatus: PaperJournalStatus
+    journal: Journal
+    language: Language
+    file: [File]
+    acknowledgement: [Acknowledgement]
+    paperJournalAuthors: [PaperJournalAuthors]
+}
+
+type PaperJournalType {
+    id: ID!
+    name: String
+    description: String
+}
+
+type PaperJournalStatus {
+    id: ID!
+    name: String
+    description: String
+}
+
+type JournalStatus {
+    id: ID!
+    name: String
+    description: String
+}
+
+type Language {
+    id: ID!
+    code: String
+    name: String
+}
+
+type Publisher {
+    id: ID!
+    nameSrb: String
+    nameEng: String
+    nameOth: String
+    address: String
+    url: String
+    country: String
+    language: Language
+}
+
+type Journal {
+    id: ID!
+    nameSrb: String
+    nameEng: String
+    nameOth: String
+    pissn: String
+    eissn: String
+    abbreviationSrb: String
+    abbreviationEng: String
+    abbreviationOth: String
+    abstractSrb: String
+    abstractEng: String
+    abstractOth: String
+    note: String
+    uri: String
+    scopusID: String
+    cobissID: String
+    ecrisID: String
+    creator: String
+    modifier: String
+    creationDate: DateTime
+    lastModificationDate: DateTime
+    recordStatus: Int
+    journalStatus: JournalStatus
+    language: Language
+    publisher: Publisher
+}

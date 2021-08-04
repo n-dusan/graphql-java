@@ -1,0 +1,273 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: branko.milosavljevic
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: username
+                  type: varchar(50)
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: password
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: firstName
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: lastName
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: email
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: enabled
+                  type: boolean
+                  constraints:
+                    nullable: false
+              - column:
+                  name: lastPasswordResetDate
+                  type: datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: lastLoginDate
+                  type: datetime
+                  constraints:
+                    nullable: false
+        - createTable:
+            tableName: authorities
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+        - createTable:
+            tableName: user_authority
+            columns:
+              - column:
+                  name: user_id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    references: users(id)
+                    foreignKeyName: fk_auth_users
+              - column:
+                  name: authority_id
+                  type: int
+                  constraints:
+                    nullable: false
+                    references: authorities(id)
+                    foreignKeyName: fk_auth_auth
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: username
+                  value: 'branko.milosavljevic'
+              - column:
+                  name: password
+                  value: '$2a$04$uxL4QFzREqQdBplr2jIQTuh/G68OiIenQwwhF7ZY61k58Nz3rD5Ya' # 12345
+              - column:
+                  name: firstName
+                  value: 'Branko'
+              - column:
+                  name: lastName
+                  value: 'Milosavljević'
+              - column:
+                  name: email
+                  value: 'branko.milosavljevic@ftninformatika.com'
+              - column:
+                  name: enabled
+                  value: true
+              - column:
+                  name: lastPasswordResetDate
+                  value: now()
+              - column:
+                  name: lastLoginDate
+                  value: now()
+        - insert:
+            tableName: authorities
+            columns:
+              - column:
+                  name: name
+                  value: 'ROLE_ADMIN'
+        - insert:
+            tableName: user_authority
+            columns:
+              - column:
+                  name: user_id
+                  value: 1
+              - column:
+                  name: authority_id
+                  value: 1
+  - changeSet:
+      id: 2
+      author: branko.milosavljevic
+      changes:
+        - createTable:
+            tableName: institutions
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: title
+                  type: varchar(200)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: city
+                  type: varchar(200)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: address
+                  type: varchar(200)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: postalCode
+                  type: varchar(200)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: eCRISID
+                  type: INTEGER
+                  constraints:
+                    nullable: false
+              - column:
+                  name: establishmentDate
+                  type: datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: creationDate
+                  type: datetime
+                  constraints:
+                    nullable: true
+              - column:
+                  name: lastModificationDate
+                  type: datetime
+                  constraints:
+                    nullable: true
+        - insert:
+            tableName: institutions
+            columns:
+              - column:
+                  name: title
+                  value: 'Univerzitet u Novom Sadu'
+              - column:
+                  name: city
+                  value: 'Novi Sad'
+              - column:
+                  name: address
+                  value: 'Neki Trg'
+              - column:
+                  name: postalCode
+                  value: '21000'
+              - column:
+                  name: eCRISID
+                  value: 1
+              - column:
+                  name: establishmentDate
+                  value: now()
+              - column:
+                  name: creationDate
+                  value: now()
+              - column:
+                  name: lastModificationDate
+                  value: now()
+
+  - changeSet:
+      id: 3
+      author: branko.milosavljevic
+      changes:
+        - createTable:
+            tableName: countries
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(200)
+                  constraints:
+                    nullable: false
+                    unique: true
+        - insert:
+            tableName: countries
+            columns:
+              - column:
+                  name: name
+                  value: 'Srbija'
+        - insert:
+            tableName: countries
+            columns:
+              - column:
+                  name: name
+                  value: 'Crna Gora'
+        - insert:
+            tableName: countries
+            columns:
+              - column:
+                  name: name
+                  value: 'Makedonija'
+        - insert:
+            tableName: countries
+            columns:
+              - column:
+                  name: name
+                  value: 'Bosna'
+  - changeSet:
+      id: 4
+      author: branko.milosavljevic
+      changes:
+        - addColumn:
+            tableName: institutions
+            columns:
+              - column:
+                  name: country_id
+                  type: int
+                  defaultValue: 1
+                  constraints:
+                    nullable: false
+                    references: countries(id)
+                    foreignKeyName: fk_inst_coun

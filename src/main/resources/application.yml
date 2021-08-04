@@ -1,0 +1,151 @@
+spring:
+  profiles:
+    active: development2
+
+logging:
+  level:
+    root: INFO
+
+---
+# spring.hateoas.use-hal-as-default-json-media-type=true
+spring:
+  profiles: development
+  h2.console.enabled: true
+  jpa:
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      ddl-auto: create
+  data:
+    elasticsearch:
+      cluster-name:
+      cluster-nodes:
+      properties:
+        http: true
+
+
+
+#    elasticsearch:
+#      cluster-name:
+#      cluster-nodes:
+#      properties:
+#        http:
+#          enabled: true
+#          port: 9200
+
+
+
+jwt:
+  header: Authorization
+  secret: mySecret
+  expiration: 604800
+  route:
+    authentication:
+      path: auth
+      refresh: refresh
+
+h2:
+  jdbcurl: jdbc:h2:mem:cris;DATABASE_TO_UPPER=false;MODE=PostgreSQL;DB_CLOSE_ON_EXIT=FALSE;DB_CLOSE_DELAY=-1
+  username: h2
+
+logging:
+  level:
+    com.ftninformatika: DEBUG
+
+---
+spring:
+  profiles: development2
+  datasource.type: com.zaxxer.hikari.HikariDataSource
+  jpa.hibernate.ddl-auto: update
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+
+psql:
+  jdbcurl: jdbc:postgresql://localhost:5432/cris
+  username: cris
+  password: cris
+
+logging:
+  level:
+    com.ftninformatika: DEBUG
+
+jwt:
+  header: Authorization
+  secret: mySecret
+  expiration: 604800
+  route:
+    authentication:
+      path: auth
+      refresh: refresh
+
+
+datetime:
+  scalars:
+    localDateTime:
+      scalarName: LocalDateTime
+
+---
+
+spring:
+  profiles: test
+  h2.console.enabled: true
+  jpa:
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      ddl-auto: none
+
+h2:
+  jdbcurl: jdbc:h2:mem:cris;DATABASE_TO_UPPER=false;MODE=PostgreSQL;DB_CLOSE_ON_EXIT=FALSE;DB_CLOSE_DELAY=-1
+  username: h2
+
+
+logging:
+  level:
+    com.ftninformatika: DEBUG
+
+---
+
+spring:
+  profiles: staging
+  datasource.type: com.zaxxer.hikari.HikariDataSource
+  jpa.hibernate.ddl-auto: none
+
+psql:
+  jdbcurl: jdbc:postgresql://localhost:5432/cris?currentSchema=cris
+  username: cris
+  password: cris
+
+logging:
+  level:
+    com.ftninformatika: DEBUG
+
+---
+
+spring:
+  profiles: production
+  datasource.type: com.zaxxer.hikari.HikariDataSource
+  jpa.hibernate.ddl-auto: none
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+psql:
+  jdbcurl: jdbc:postgresql://localhost:5432/cris
+  username: cris
+  password: cris
+
+logging:
+  path: /var/log/cris/
+  file: cris.log
+  level:
+    com.ftninformatika: WARN
+
+jwt:
+  header: Authorization
+  secret: mySecret
+  expiration: 604800
+  route:
+    authentication:
+      path: auth
+      refresh: refresh
